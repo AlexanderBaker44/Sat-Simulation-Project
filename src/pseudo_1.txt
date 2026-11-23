@@ -1,0 +1,50 @@
+Satellite Simulation Pseudo Code
+
+
+10 satellites total in the constellation, but not all will be joining at the same time
+simulation will be over the course of 14 years
+
+Constellation:
+    HEALTHY: 10 (At start)
+    DEGRADED: 0
+    FAILED: 0
+    LAUNCHED = depends on how many launch at start
+    NOT_LAUNCEHD = depends
+
+Each satellite starts with:
+    success probability of ~0.9
+    degradation/failure probability of ~0.1
+    state = one of: HEALTHY, DEGRADED, FAILED
+    age = 0
+    LAUNCHED = FALSE
+
+
+
+for each simulation in 1 - n runs:
+    reset all satellites LAUNCHED = False
+    for year in 1 - 14:
+        for each satellite in the constellation:
+            LAUNCHED = TRUE
+            age = year - join_year
+            if age == 0:
+                state = HEALTHY
+            if state is HEALTHY:
+                get probability for (state, age)
+                draw random number
+                update state
+            elif state is DEGRADED:
+                get probability for (state, age)
+                draw random number
+                update state
+            elif state is FAILED:
+                if age < 2 or 3 (whatever age we determine to be outlier):
+                    add to risk bar
+                drop out out constellation
+        record the states of each satellite this year
+    record outcomes after 14 years
+
+
+Risk Bar:
+    catch outliers/worst case scenarios that may still be useful to present/acknowledge (like a satellite failing in its first year)
+
+
